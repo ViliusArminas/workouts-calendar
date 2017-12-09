@@ -21,7 +21,7 @@ const Menu = [
         icon: 'fa fa-home'
     },
     {
-        label: 'Workoutsssss',
+        label: 'Workouts',
         path: MenuEnum.workouts,
         icon: 'fa fa-list-ul',
         menu: [

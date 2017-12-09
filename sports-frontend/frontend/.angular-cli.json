@@ -1,0 +1,73 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "frontend"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "car.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css",
+        "assets/AdminLTE-2.3.11/bootstrap/css/bootstrap.min.css",
+        "assets/AdminLTE-2.3.11/fontawesome/font-awesome.min.css",
+        "assets/AdminLTE-2.3.11/fontawesome/ionicons.min.css",
+        "assets/AdminLTE-2.3.11/dist/css/AdminLTE.min.css",
+        "assets/AdminLTE-2.3.11/dist/css/skins/skin-green-light.css",
+        "assets/AdminLTE-2.3.11/dist/css/skins/skin-blue-light.css",
+        "assets/AdminLTE-2.3.11/dist/css/skins/skin-blue.css",
+        "assets/AdminLTE-2.3.11/dist/css/skins/skin-green.css",
+        "assets/AdminLTE-2.3.11/dist/css/skins/skin-red.css",
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+        "../node_modules/angular-calendar/dist/css/angular-calendar.css"
+      ],
+      "scripts": [
+        "assets/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js",
+        "assets/AdminLTE-2.3.11/bootstrap/js/bootstrap.min.js",
+        "assets/AdminLTE-2.3.11/dist/js/app.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

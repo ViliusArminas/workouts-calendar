@@ -1,0 +1,103 @@
+<div *ngIf="loading">
+    <app-loading-component></app-loading-component>
+</div>
+<div *ngIf="!loading">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="btn-group">
+                <div class="btn btn-grey btn-default" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+                    Previous
+                </div>
+                <div class="btn btn-grey btn-default" mwlCalendarToday [(viewDate)]="viewDate">
+                    Today
+                </div>
+                <div class="btn btn-grey btn-default" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+                    Next
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'EN' }}</h3>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group">
+                <div class="btn  btn-grey btn-default" (click)="view = 'month'" [class.active]="view === 'month'">
+
+                    Month
+                </div>
+                <div class="btn btn-grey btn-default" (click)="view = 'week'" [class.active]="view === 'week'">
+                    Week
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div [ngSwitch]="view">
+        <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="calendarEvents" [locale]="locale" [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="calendarEvents" [locale]="locale" [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-week-view>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+<bs-modal #workoutsDetailsModal>
+    <div *ngIf="itemLoading">
+        <app-loading-component></app-loading-component>
+    </div>
+    <div *ngIf="!itemLoading">
+        <bs-modal-header>
+
+
+            <h4 class="modal-title">{{workoutDetails.workoutName}}</h4>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box-header">
+                        <h3 class="box-title">Workout exercises</h3>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                                <tr *ngFor="let e of workoutDetails.exercises; let ind = index;">
+                                    <td>{{e.exerciseName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box-header">
+                        <h3 class="box-title">Workout Days</h3>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Week of month</th>
+                                    <th>Day of week</th>
+                                </tr>
+                                <tr *ngFor="let d of workoutDetails.workoutDays; let ind = index;">
+                                    <td>{{d.workoutDayMonthWeek}}</td>
+                                    <td>{{d.workoutDayWeekDay}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </bs-modal-body>
+        <bs-modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="workoutsDetailsModal" (click)="workoutsDetailsModal.dismiss()">Close</button>
+        </bs-modal-footer>
+    </div>
+</bs-modal>

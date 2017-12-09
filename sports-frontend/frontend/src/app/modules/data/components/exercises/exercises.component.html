@@ -1,0 +1,84 @@
+<button type="button" class="btn btn-danger" (click)="addNewExercise()">
+    <i class="fa fa-plus"> </i> Add New</button>
+<br>
+<br>
+<div *ngIf="loading">
+    <app-loading-component></app-loading-component>
+</div>
+<div *ngIf="!loading">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Exercises</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
+                            <tr *ngFor="let i of exerciseList$ | async">
+                                <td>{{i.exerciseName}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" (click)="editExercise(i)">
+                                        <i class="fa fa-edit"></i> Edit</button>
+                                    <button class="btn btn-sm btn-danger" (click)="askToDelete(i.exerciseId)">
+                                        <i class="fa fa-close"></i> Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form [formGroup]="exercisesForm" novalidate>
+    <bs-modal #exerciseModal>
+        <bs-modal-header>
+            <h4 class="modal-title">{{action}} - Exercise</h4>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" [class.has-error]="!exercisesForm.controls.exerciseName.valid" [class.has-success]="exercisesForm.controls.exerciseName.valid">
+                        <label class="control-label">Exercise Name*</label>
+                        <input class="form-control" type="text" name="exerciseName" formControlName="exerciseName" />
+                        <small *ngIf="!exercisesForm.controls.exerciseName.valid" class="text-danger">Required</small>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" [class.has-error]="!exercisesForm.controls.muscleGroups.valid" [class.has-success]="exercisesForm.controls.muscleGroups.valid">
+                        <label class="control-label">Muscle Group For Exercise*</label>
+                        <select [compareWith]="equals" class="form-control" name="muscleGroups" formControlName="muscleGroups">
+                            <option *ngFor="let i of muscleGroupsList$ | async" [ngValue]="i">{{i.muscleGroupName}}</option>
+                        </select>
+                        <small *ngIf="!exercisesForm.controls.muscleGroups.valid" class="text-danger">Required</small>
+                    </div>
+                </div>
+            </div>
+        </bs-modal-body>
+        <bs-modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="exerciseModal" (click)="exerciseModal.dismiss()">Cancel</button>
+            <button *ngIf="this.exercisesForm.controls.exerciseId.value !== null" type="button" class="btn btn-success" (click)="saveExercise(exercisesForm.value, exercisesForm.valid)">Update</button>
+            <button *ngIf="this.exercisesForm.controls.exerciseId.value === null" type="button" class="btn btn-success" (click)="saveExercise(exercisesForm.value, exercisesForm.valid)">Add</button>
+        </bs-modal-footer>
+    </bs-modal>
+</form>
+
+<bs-modal #deleteExerciseModal>
+    <bs-modal-header>
+        <h4 class="modal-title">Delete Exercise</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        <p>Do you really want to delete this exercise?</p>
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-primary" (click)="deleteExercise()">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="deleteExerciseModal" (click)="deleteExerciseModal.dismiss()">Cancel</button>
+    </bs-modal-footer>
+</bs-modal>

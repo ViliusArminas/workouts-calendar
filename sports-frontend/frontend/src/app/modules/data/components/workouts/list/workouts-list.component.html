@@ -1,0 +1,103 @@
+<button type="button" class="btn btn-danger" (click)="addNewWorkout()">
+    <i class="fa fa-plus"> </i> Add New</button>
+<br>
+<br>
+<div *ngIf="loading">
+    <app-loading-component></app-loading-component>
+</div>
+<div *ngIf="!loading">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <h3 class="box-title">Workouts</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Exercises Count</th>
+                                <th></th>
+                            </tr>
+                            <tr *ngFor="let i of workoutsList$ | async">
+                                <td>{{i.workoutName}}</td>
+                                <td>{{i.exercises.length}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" (click)="showWorkout(i)">
+                                        <i class="fa fa-sitemap"></i> Details</button>
+                                    <button class="btn btn-sm btn-primary" (click)="editWorkout(i.workoutId)">
+                                        <i class="fa fa-edit"></i> Edit</button>
+                                    <button class="btn btn-sm btn-danger" (click)="askToDelete(i.workoutId)">
+                                        <i class="fa fa-close"></i> Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<bs-modal #workoutsDetailsModal>
+    <bs-modal-header>
+        <h4 class="modal-title">{{workoutDetails.workoutName}}</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box-header">
+                    <h3 class="box-title">Workout exercises</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                            <tr *ngFor="let e of workoutDetails.exercises; let ind = index;">
+                                <td>{{e.exerciseName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box-header">
+                    <h3 class="box-title">Workout Days</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th>Week of month</th>
+                                <th>Day of week</th>
+                            </tr>
+                            <tr *ngFor="let d of workoutDetails.workoutDays; let ind = index;">
+                                <td>{{d.workoutDayMonthWeek}}</td>
+                                <td>{{d.workoutDayWeekDay}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="workoutsDetailsModal" (click)="workoutsDetailsModal.dismiss()">Close</button>
+    </bs-modal-footer>
+</bs-modal>
+
+<bs-modal #deleteWorkoutModal>
+    <bs-modal-header>
+        <h4 class="modal-title">Delete Workout</h4>
+    </bs-modal-header>
+    <bs-modal-body>
+        <p>Do you really want to delete this workout?</p>
+    </bs-modal-body>
+    <bs-modal-footer>
+        <button type="button" class="btn btn-primary" (click)="deleteWorkout()">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="deleteWorkoutModal" (click)="deleteWorkoutModal.dismiss()">Cancel</button>
+    </bs-modal-footer>
+</bs-modal>

@@ -1,0 +1,118 @@
+<!-- Main Header -->
+<header class="main-header">
+    <!-- Logo -->
+    <a class="logo"> Sport Workouts</a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- User Account Menu -->
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a *ngIf="isLoggedIn()" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <img src="https://www.b1g1.com/assets/admin/images/no_image_user.png" class="user-image" alt="User Image">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs"> {{userName}} </span>
+                    </a>
+                    <a *ngIf="!isLoggedIn()" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs"> Sign In</span>
+                    </a>
+
+                    <ul *ngIf="isLoggedIn()" class="dropdown-menu">
+                        <!-- The user image in the menu -->
+                        <li class="user-header">
+                            <img src="https://www.b1g1.com/assets/admin/images/no_image_user.png" class="img-circle" alt="User Image">
+
+                            <p>
+                                {{userName}}
+                                <small>Workouts page user</small>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a class="btn btn-default btn-flat" (click)="logout()">Sign out</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul *ngIf="!isLoggedIn()" class="dropdown-menu">
+
+                        <!-- The user image in the menu -->
+                        <ng-container *ngIf="!registerOpen">
+                            <li class="user-header">
+                                <p>
+                                    Sign Up
+                                </p>
+                                <div class="form-group">
+                                    <input [(ngModel)]="login_username" name="login_username" type="text" tabindex="1" class="form-control" placeholder="Email"
+                                        value="">
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="login_password" name="login_password" type="password" tabindex="2" class="form-control" placeholder="Password">
+                                </div>
+                            </li>
+                            <div *ngIf="wrongCredentials">
+                                <div class="alert alert-danger alert-dismissable fade in">
+                                    <strong>Login failed!</strong> Make sure your credentials are correct
+                                </div>
+                            </div>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a (click)="registerButton($event)" class="btn btn-default btn-flat">Sign up</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a (click)="login($event)" class="btn btn-default btn-flat">Sign In</a>
+                                </div>
+                            </li>
+                        </ng-container>
+                        <ng-container *ngIf="registerOpen">
+                            <li style="height: 220px;" class="user-header">
+                                <p>
+                                    Register
+                                </p>
+                                <div class="form-group">
+                                    <input [(ngModel)]="register_username" name="register_username" type="text" tabindex="1" class="form-control" placeholder="Email"
+                                        value="">
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="register_password" name="register_password" type="password" tabindex="2" class="form-control" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="register_password2" name="register_password2" type="password" tabindex="2" class="form-control" placeholder="Repeat Password">
+                                </div>
+                            </li>
+                            <div *ngIf="wrongCredentials">
+                                <div class="alert alert-danger alert-dismissable fade in">
+                                    <strong>Registration failed!</strong> Make sure you filled correct information
+                                </div>
+                            </div>
+
+                            <!-- Menu Body -->
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a (click)="registerButtonCancel($event)" class="btn btn-default btn-flat">Cancel</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a (click)="register($event)" class="btn btn-default btn-flat">Register</a>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
